@@ -62,7 +62,7 @@ margin: 20px 0;
   text-align: center;
   color: #000;
   outline: none;
-  border: none;
+  border: 1px solid #000;
 }
 .inputBox span{
   position: absolute;

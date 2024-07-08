@@ -17,28 +17,47 @@ slider.addEventListener("input", () => {
   sliderVal.textContent = slider.value;
 });
 
-let randomPass = Math.floor(Math.random() * slider.value);
-
 genBtn.addEventListener("click", () => {
   generatePassword();
 });
+
+copy.addEventListener("click", () => {
+  copyText();
+});
+
 function generatePassword() {
-let genPass = "";
-let allChar = "";
+  let genPass = "";
+  let allChar = "";
 
-allChar += upper.checked ? upperVal : "";
-allChar += lower.checked ? lowerVal : "";
-allChar += Num.checked ? numberVal : "";
-allChar += symbols.checked ? symbolVal : "";
+  allChar += upper.checked ? upperVal : "";
+  allChar += lower.checked ? lowerVal : "";
+  allChar += Num.checked ? numberVal : "";
+  allChar += symbols.checked ? symbolVal : "";
 
-if(allChar === ""  || allChar.length === 0){
-  alert("please select any character for generate password")
+  if (allChar === "" || allChar.length === 0) {
+    alert("please select any character for generate password");
+    return;
+  }
+
+  for (let i = 0; i < slider.value; i++) {
+    genPass += allChar.charAt(Math.floor(Math.random() * allChar.length));
+  }
+
+  disp.value = genPass;
 }
 
-for(let i = 0; i < slider.value; i++){
-  genPass += allChar.charAt(Math.floor(Math.random() * allChar.length));
-}
+function copyText() {
+  if (disp.value === "") {
+    alert("No text to copy");
+    return; 
+  }
 
-disp.value = genPass;
+  disp.select();
+  disp.setSelectionRange(0, 99999);
 
+  navigator.clipboard.writeText(disp.value).then(function() {
+    alert("Text copied: " + disp.value);
+  }, function(err) {
+    console.error("Could not copy text: ", err);
+  });
 }
